@@ -16,6 +16,14 @@
           p:dataSource-ref="dataSource">
     </bean>
 
+    <bean id="defaultPasswordEncoder" class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder">
+        <constructor-arg name="encodingAlgorithm" value="${cas.authn.password.encoding.alg}"/>
+    </bean>
+
+    <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
+    <alias name="dataSource" alias="queryDatabaseDataSource"/>
+    <alias name="defaultPasswordEncoder" alias="passwordEncoder"/>
+
     <util:map id="authenticationHandlersResolvers">
         <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver"/>
         <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver"/>
@@ -29,8 +37,6 @@
     <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
           p:backingMap-ref="attrRepoBackingMap"/>
 
-    <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
-    <alias name="dataSource" alias="queryDatabaseDataSource"/>
     <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver"/>
 
     <util:map id="attrRepoBackingMap">
