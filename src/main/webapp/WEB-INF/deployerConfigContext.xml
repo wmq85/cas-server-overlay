@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="noOpCipherExecutor" class="org.jasig.cas.util.NoOpCipherExecutor" />
+    <bean id="noOpCipherExecutor" class="org.jasig.cas.util.NoOpCipherExecutor"/>
     <bean id="noOpCookieValueManager" class="org.jasig.cas.web.support.NoOpCookieValueManager"/>
 
-    <alias name="noOpCookieValueManager" alias="defaultCookieValueManager" />
-    <alias name="noOpCipherExecutor" alias="defaultCookieCipherExecutor" />
+    <alias name="noOpCookieValueManager" alias="defaultCookieValueManager"/>
+    <alias name="noOpCipherExecutor" alias="defaultCookieCipherExecutor"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
@@ -52,6 +52,7 @@
         </property>
         <property name="resultAttributeMapping">
             <map>
+                <entry key="userId" value="username"/>
                 <entry key="username_" value="username"/>
             </map>
         </property>
