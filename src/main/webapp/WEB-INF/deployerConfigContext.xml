@@ -6,9 +6,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <bean id="noOpCipherExecutor" class="org.jasig.cas.util.NoOpCipherExecutor" />
+    <bean id="noOpCookieValueManager" class="org.jasig.cas.web.support.NoOpCookieValueManager"/>
+
+    <alias name="noOpCookieValueManager" alias="defaultCookieValueManager" />
+    <alias name="noOpCipherExecutor" alias="defaultCookieCipherExecutor" />
+
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/auth?characterEncoding=utf8"
+          p:url="jdbc:mysql://localhost:3306/auth?useSSL=true&amp;characterEncoding=utf8"
           p:username="root"
           p:password="root"></bean>
 
@@ -20,40 +26,47 @@
         <constructor-arg name="encodingAlgorithm" value="${cas.authn.password.encoding.alg}"/>
     </bean>
 
+    <bean id="proxyAuthenticationHandler"
+          class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"/>
+
+    <bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
+        <constructor-arg ref="authenticationHandlersResolvers"/>
+        <property name="authenticationPolicy">
+            <bean class="org.jasig.cas.authentication.AnyAuthenticationPolicy"/>
+        </property>
+    </bean>
+
+    <bean id="personDirectoryPrincipalResolver"
+          class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver"
+          p:attributeRepository-ref="attributeRepository">
+    </bean>
+
+    <bean id="attributeRepository"
+          class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">
+        <constructor-arg index="0" ref="dataSource"/>
+        <constructor-arg index="1" value="SELECT * FROM gionee_user WHERE {0}"/>
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username_" value="username"/>
+            </map>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="username_" value="username"/>
+            </map>
+        </property>
+    </bean>
+
     <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
+    <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver"/>
+
     <alias name="dataSource" alias="queryDatabaseDataSource"/>
     <alias name="defaultPasswordEncoder" alias="passwordEncoder"/>
-
-    <util:map id="authenticationHandlersResolvers">
-        <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver"/>
-        <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver"/>
-    </util:map>
 
     <util:list id="authenticationMetadataPopulators">
         <ref bean="successfulHandlerMetaDataPopulator"/>
         <ref bean="rememberMeAuthenticationMetaDataPopulator"/>
     </util:list>
-
-    <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
-          p:backingMap-ref="attrRepoBackingMap"/>
-
-    <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver"/>
-
-    <util:map id="attrRepoBackingMap">
-        <entry key="uid" value="uid"/>
-        <entry key="eduPersonAffiliation" value="eduPersonAffiliation"/>
-        <entry key="groupMembership" value="groupMembership"/>
-        <entry>
-            <key>
-                <value>memberOf</value>
-            </key>
-            <list>
-                <value>faculty</value>
-                <value>staff</value>
-                <value>org</value>
-            </list>
-        </entry>
-    </util:map>
 
     <alias name="serviceThemeResolver" alias="themeResolver"/>
 
@@ -82,5 +95,13 @@
     <alias name="defaultPrincipalFactory" alias="principalFactory"/>
     <alias name="defaultAuthenticationTransactionManager" alias="authenticationTransactionManager"/>
     <alias name="defaultPrincipalElectionStrategy" alias="principalElectionStrategy"/>
-    <alias name="tgcCipherExecutor" alias="defaultCookieCipherExecutor"/>
+
+    <util:map id="authenticationHandlersResolvers">
+        <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver"/>
+        <entry key-ref="queryDatabaseAuthenticationHandler" value-ref="primaryPrincipalResolver"/>
+    </util:map>
+
+    <bean id="proxyPrincipalResolver"
+          class="org.jasig.cas.authentication.principal.BasicPrincipalResolver"/>
+
 </beans>
