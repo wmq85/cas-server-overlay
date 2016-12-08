@@ -47,13 +47,13 @@
         <constructor-arg index="1" value="SELECT * FROM gionee_user WHERE {0}"/>
         <property name="queryAttributeMapping">
             <map>
-                <entry key="username_" value="username"/>
+                <entry key="username" value="username_"/>
             </map>
         </property>
         <property name="resultAttributeMapping">
             <map>
-                <entry key="userId" value="username"/>
-                <entry key="username_" value="username"/>
+                <entry key="username_" value="userId"/>
+                <entry key="id_" value="something"/>
             </map>
         </property>
     </bean>

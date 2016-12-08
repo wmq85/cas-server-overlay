@@ -49,6 +49,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.jasig.cas</groupId>
             <artifactId>cas-server-webapp</artifactId>
             <version>${cas.version}</version>
@@ -67,10 +80,22 @@
             <artifactId>cas-server-core</artifactId>
             <version>${cas.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-services</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jasig.cas</groupId>
             <artifactId>cas-server-webapp-support</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-actions</artifactId>
             <version>${cas.version}</version>
             <scope>provided</scope>
         </dependency>

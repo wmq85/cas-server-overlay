@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
     <cas:authenticationSuccess>
-        <cas:user>${fn:escapeXml(principal.username)}</cas:user>
+        <cas:user>${fn:escapeXml(principal.id)}</cas:user>
         <c:if test="${not empty pgtIou}">
             <cas:proxyGrantingTicket>${pgtIou}</cas:proxyGrantingTicket>
         </c:if>
