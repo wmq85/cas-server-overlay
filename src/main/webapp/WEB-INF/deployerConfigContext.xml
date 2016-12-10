@@ -58,6 +58,14 @@
         </property>
     </bean>
 
+    <!--<bean id="returnAllowedAttributeReleasePolicy" class="org.jasig.cas.services.ReturnAllowedAttributeReleasePolicy"-->
+          <!--p:allowedAttributes-ref="allowedAttributesList"/>-->
+
+    <!--<util:list id="allowedAttributesList">-->
+        <!--<value>userId</value>-->
+        <!--<value>something</value>-->
+    <!--</util:list>-->
+
     <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
     <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver"/>
 
