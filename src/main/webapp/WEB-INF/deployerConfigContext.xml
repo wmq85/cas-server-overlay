@@ -2,9 +2,11 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:app.properties"/>
 
     <bean id="noOpCipherExecutor" class="org.jasig.cas.util.NoOpCipherExecutor"/>
     <bean id="noOpCookieValueManager" class="org.jasig.cas.web.support.NoOpCookieValueManager"/>
@@ -14,9 +16,9 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8"
-          p:username="root"
-          p:password="root"></bean>
+          p:url="${db.url}"
+          p:username="${db.username}"
+          p:password="${db.password}"></bean>
 
     <bean id="queryDatabaseAuthenticationHandler" class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler"
           p:dataSource-ref="dataSource">
@@ -59,11 +61,11 @@
     </bean>
 
     <!--<bean id="returnAllowedAttributeReleasePolicy" class="org.jasig.cas.services.ReturnAllowedAttributeReleasePolicy"-->
-          <!--p:allowedAttributes-ref="allowedAttributesList"/>-->
+    <!--p:allowedAttributes-ref="allowedAttributesList"/>-->
 
     <!--<util:list id="allowedAttributesList">-->
-        <!--<value>userId</value>-->
-        <!--<value>something</value>-->
+    <!--<value>userId</value>-->
+    <!--<value>something</value>-->
     <!--</util:list>-->
 
     <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
