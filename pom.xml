@@ -148,6 +148,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>develop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <db.url>jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8</db.url>
+                <db.username>root</db.username>
+                <db.password>root</db.password>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>shibboleth-releases</id>
