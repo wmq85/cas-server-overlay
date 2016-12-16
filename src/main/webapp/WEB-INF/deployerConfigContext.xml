@@ -55,7 +55,7 @@
         <property name="resultAttributeMapping">
             <map>
                 <entry key="username_" value="userId"/>
-                <entry key="id_" value="something"/>
+                <entry key="id_" value="globalId"/>
             </map>
         </property>
     </bean>
