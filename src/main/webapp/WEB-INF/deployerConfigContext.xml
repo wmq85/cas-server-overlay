@@ -16,7 +16,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8"
+          p:url="jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8&amp;autoReconnect=true"
           p:username="root"
           p:password="root"></bean>
 
