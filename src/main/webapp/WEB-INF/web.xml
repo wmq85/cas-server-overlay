@@ -111,6 +111,10 @@
             com.gionee.cas.servlet.CaptchaServlet
         </servlet-class>
         <init-param>
+            <param-name>kaptcha.textproducer.char.string</param-name>
+            <param-value>1234567890</param-value>
+        </init-param>
+        <init-param>
             <param-name>kaptcha.border.thickness</param-name>
             <param-value>1</param-value>
         </init-param>
