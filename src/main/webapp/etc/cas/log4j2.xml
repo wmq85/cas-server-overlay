@@ -34,6 +34,11 @@
         </RollingFile>
     </Appenders>
     <Loggers>
+        <AsyncLogger name="org.jasig.cas.web.view.CasReloadableMessageBundle" level="error" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+
         <AsyncLogger  name="org.jasig" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="console"/>
             <AppenderRef ref="file"/>
