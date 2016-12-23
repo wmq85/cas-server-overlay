@@ -79,6 +79,20 @@
             <span id="capslock-on" style="display:none;"><p><img src="images/warning.png" valign="top"> <spring:message code="screen.capslock.on" /></p></span>
         </section>
 
+        <section class="row">
+            <label for="captcha">captcha</label>
+                <%--<spring:message code="screen.welcome.label.netid.accesskey" var="userNameAccessKey"/>--%>
+            <div>
+                <div style="float :left;width: 49%;">
+                    <form:input cssClass="required" cssErrorClass="error" id="captcha" size="4" tabindex="1"
+                                accesskey="${userNameAccessKey}" path="captcha" autocomplete="off" htmlEscape="true"/>
+                </div>
+                <div style="float: right; width: 49%;">
+                    <img src="captcha"/>
+                </div>
+            </div>
+        </section>
+
         <!--
         <section class="row check">
             <p>
@@ -95,7 +109,7 @@
         -->
 
         <section class="row btn-row">
-           
+
             <input type="hidden" name="execution" value="${flowExecutionKey}" />
             <input type="hidden" name="_eventId" value="submit" />
 
