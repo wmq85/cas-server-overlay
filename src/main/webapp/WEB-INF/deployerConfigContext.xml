@@ -6,7 +6,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:app.properties"/>
+    <util:properties id="casProperties" location="classpath:cas.properties"/>
+
+    <context:property-placeholder properties-ref="casProperties"/>
 
     <bean id="noOpCipherExecutor" class="org.jasig.cas.util.NoOpCipherExecutor"/>
     <bean id="noOpCookieValueManager" class="org.jasig.cas.web.support.NoOpCookieValueManager"/>
@@ -15,10 +17,14 @@
     <alias name="noOpCipherExecutor" alias="defaultCookieCipherExecutor"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-          p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="${db.url}"
-          p:username="${db.username}"
-          p:password="${db.password}"></bean>
+          p:driverClassName="com.mysql.jdbc.Driver">
+        <!--p:url="${db.url}"-->
+        <!--p:username="${db.username}"-->
+        <!--p:password="${db.password}">-->
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
 
     <bean id="queryDatabaseAuthenticationHandler" class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler"
           p:dataSource-ref="dataSource">
