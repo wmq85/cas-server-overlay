@@ -52,6 +52,11 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
+
+            <resource>
+                <directory>src/main/webapp/etc/cas</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
     </build>
 
@@ -179,6 +184,8 @@
                 <db.url>jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8</db.url>
                 <db.username>root</db.username>
                 <db.password>root</db.password>
+
+                <server.name>http://192.168.189.24:8888</server.name>
             </properties>
         </profile>
 
@@ -189,6 +196,8 @@
                 <db.url>jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8</db.url>
                 <db.username>root</db.username>
                 <db.password>root</db.password>
+
+                <server.name>http://icas.go.gionee.com</server.name>
             </properties>
         </profile>
     </profiles>
