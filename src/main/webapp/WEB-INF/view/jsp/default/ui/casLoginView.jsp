@@ -1,212 +1,255 @@
-<jsp:directive.include file="includes/top.jsp" />
-
-<%--<c:if test="${not pageContext.request.secure}">--%>
-    <%--<div id="msg" class="errors">--%>
-        <%--<h2><spring:message code="screen.nonsecure.title" /></h2>--%>
-        <%--<p><spring:message code="screen.nonsecure.message" /></p>--%>
-    <%--</div>--%>
-<%--</c:if>--%>
-
-<div id="cookiesDisabled" class="errors" style="display:none;">
-    <h2><spring:message code="screen.cookies.disabled.title" /></h2>
-    <p><spring:message code="screen.cookies.disabled.message" /></p>
-</div>
-
-
-<c:if test="${not empty registeredService}">
-    <c:set var="registeredServiceLogo" value="images/webapp.png"/>
-    <c:set var="registeredServiceName" value="${registeredService.name}"/>
-    <c:set var="registeredServiceDescription" value="${registeredService.description}"/>
-
-    <c:choose>
-        <c:when test="${not empty mduiContext}">
-            <c:if test="${not empty mduiContext.logoUrl}">
-                <c:set var="registeredServiceLogo" value="${mduiContext.logoUrl}"/>
-            </c:if>
-            <c:set var="registeredServiceName" value="${mduiContext.displayName}"/>
-            <c:set var="registeredServiceDescription" value="${mduiContext.description}"/>
-        </c:when>
-        <c:when test="${not empty registeredService.logo}">
-            <c:set var="registeredServiceLogo" value="${registeredService.logo}"/>
-        </c:when>
-    </c:choose>
-
-    <div id="serviceui" class="serviceinfo">
-        <table>
-            <tr>
-                <td><img src="${registeredServiceLogo}"></td>
-                <td id="servicedesc">
-                    <h1>${fn:escapeXml(registeredServiceName)}</h1>
-                    <p>${fn:escapeXml(registeredServiceDescription)}</p>
-                </td>
-            </tr>
-        </table>
+<%@ page pageEncoding="UTF-8" language="java" import="com.gionee.cas.util.ClientUtil" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% boolean isMobile = ClientUtil.isMobileClient(request.getHeader("user-agent"));
+    if (!isMobile) {
+%>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to Gionee GSC System</title>
+    <link rel="stylesheet" type="text/css" href="css/xst.css"/>
+</head>
+<body>
+<div class="login-body">
+    <!--header-->
+    <div class="login-header">
+        <h1><img src="xst/logo.png" width="165" height="41" /></h1>
     </div>
-    <p/>
-</c:if>
-
-<div class="box" id="login">
-    <form:form method="post" id="fm1" commandName="${commandName}" htmlEscape="true">
-
-        <form:errors path="*" id="msg" cssClass="errors" element="div" htmlEscape="false" />
-
-        <h2><spring:message code="screen.welcome.instructions" /></h2>
-
-        <section class="row">
-            <label for="username"><spring:message code="screen.welcome.label.netid" /></label>
-            <c:choose>
-                <c:when test="${not empty sessionScope.openIdLocalId}">
-                    <strong><c:out value="${sessionScope.openIdLocalId}" /></strong>
-                    <input type="hidden" id="username" name="username" value="<c:out value="${sessionScope.openIdLocalId}" />" />
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="screen.welcome.label.netid.accesskey" var="userNameAccessKey" />
-                    <form:input cssClass="required" cssErrorClass="error" id="username" size="25" tabindex="1" accesskey="${userNameAccessKey}" path="username" autocomplete="off" htmlEscape="true" />
-                </c:otherwise>
-            </c:choose>
-        </section>
-
-        <section class="row">
-            <label for="password"><spring:message code="screen.welcome.label.password" /></label>
-                <%--
-                NOTE: Certain browsers will offer the option of caching passwords for a user.  There is a non-standard attribute,
-                "autocomplete" that when set to "off" will tell certain browsers not to prompt to cache credentials.  For more
-                information, see the following web page:
-                http://www.technofundo.com/tech/web/ie_autocomplete.html
-                --%>
-            <spring:message code="screen.welcome.label.password.accesskey" var="passwordAccessKey" />
-            <form:password cssClass="required" cssErrorClass="error" id="password" size="25" tabindex="2" path="password"  accesskey="${passwordAccessKey}" htmlEscape="true" autocomplete="off" />
-            <span id="capslock-on" style="display:none;"><p><img src="images/warning.png" valign="top"> <spring:message code="screen.capslock.on" /></p></span>
-        </section>
-
-        <section class="row">
-            <label for="captcha">captcha</label>
-                <%--<spring:message code="screen.welcome.label.netid.accesskey" var="userNameAccessKey"/>--%>
-            <div>
-                <div style="float :left;width: 49%;">
-                    <form:input cssClass="required" cssErrorClass="error" id="captcha" size="4" tabindex="1"
-                                accesskey="${userNameAccessKey}" path="captcha" autocomplete="off" htmlEscape="true"/>
-                </div>
-                <div style="float: right; width: 49%;">
-                    <img src="captcha"/>
-                </div>
-            </div>
-        </section>
-
-        <!--
-        <section class="row check">
-            <p>
-                <input id="warn" name="warn" value="true" tabindex="3" accesskey="<spring:message code="screen.welcome.label.warn.accesskey" />" type="checkbox" />
-                <label for="warn"><spring:message code="screen.welcome.label.warn" /></label>
-                <br/>
-                <input id="publicWorkstation" name="publicWorkstation" value="false" tabindex="4" type="checkbox" />
-                <label for="publicWorkstation"><spring:message code="screen.welcome.label.publicstation" /></label>
-                <br/>
-                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" tabindex="5"  />
-                <label for="rememberMe"><spring:message code="screen.rememberme.checkbox.title" /></label>
-            </p>
-        </section>
-        -->
-
-        <section class="row btn-row">
-
-            <input type="hidden" name="execution" value="${flowExecutionKey}" />
-            <input type="hidden" name="_eventId" value="submit" />
-
-            <input class="btn-submit" name="submit" accesskey="l" value="<spring:message code="screen.welcome.button.login" />" tabindex="6" type="submit" />
-            <input class="btn-reset" name="reset" accesskey="c" value="<spring:message code="screen.welcome.button.clear" />" tabindex="7" type="reset" />
-        </section>
-    </form:form>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar-content">
-        <p><spring:message code="screen.welcome.security" /></p>
-
-        <c:if test="${!empty pac4jUrls}">
-            <div id="list-providers">
-                <h3><spring:message code="screen.welcome.label.loginwith" /></h3>
-                <form>
-                    <ul>
-                        <c:forEach var="entry" items="${pac4jUrls}">
-                            <li><a href="${entry.value}">${entry.key}</a></li>
-                        </c:forEach>
-                    </ul>
-                </form>
-            </div>
-        </c:if>
-
-        <div id="list-languages">
-            <%final String queryString = request.getQueryString() == null ? "" : request.getQueryString().replaceAll("&locale=([A-Za-z][A-Za-z]_)?[A-Za-z][A-Za-z]|^locale=([A-Za-z][A-Za-z]_)?[A-Za-z][A-Za-z]", "");%>
-            <c:set var='query' value='<%=queryString%>' />
-            <c:set var="xquery" value="${fn:escapeXml(query)}" />
-
-            <h3>Languages:</h3>
-
-            <c:choose>
-                <c:when test="${not empty requestScope['isMobile'] and not empty mobileCss}">
-                    <form method="get" action="login?${xquery}">
-                        <select name="locale">
-                            <option value="en">English</option>
-                            <option value="es">Spanish</option>
-                            <option value="fr">French</option>
-                            <option value="ru">Russian</option>
-                            <option value="nl">Nederlands</option>
-                            <option value="sv">Svenska</option>
-                            <option value="it">Italiano</option>
-                            <option value="ur">Urdu</option>
-                            <option value="zh_CN">Chinese (Simplified)</option>
-                            <option value="zh_TW">Chinese (Traditional)</option>
-                            <option value="de">Deutsch</option>
-                            <option value="ja">Japanese</option>
-                            <option value="hr">Croatian</option>
-                            <option value="uk">Ukranian</option>
-                            <option value="cs">Czech</option>
-                            <option value="sk">Slovak</option>
-                            <option value="sl">Slovenian</option>
-                            <option value="pl">Polish</option>
-                            <option value="ca">Catalan</option>
-                            <option value="mk">Macedonian</option>
-                            <option value="fa">Farsi</option>
-                            <option value="ar">Arabic</option>
-                            <option value="pt_PT">Portuguese</option>
-                            <option value="pt_BR">Portuguese (Brazil)</option>
-                        </select>
-                        <input type="submit" value="Switch">
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="loginUrl" value="login?${xquery}${not empty xquery ? '&' : ''}locale=" />
-                    <ul>
-                        <li class="first"><a href="${loginUrl}en">English</a></li>
-                        <li><a href="${loginUrl}es">Spanish</a></li>
-                        <li><a href="${loginUrl}fr">French</a></li>
-                        <li><a href="${loginUrl}ru">Russian</a></li>
-                        <li><a href="${loginUrl}nl">Nederlands</a></li>
-                        <li><a href="${loginUrl}sv">Svenska</a></li>
-                        <li><a href="${loginUrl}it">Italiano</a></li>
-                        <li><a href="${loginUrl}ur">Urdu</a></li>
-                        <li><a href="${loginUrl}zh_CN">Chinese (Simplified)</a></li>
-                        <li><a href="${loginUrl}zh_TW">Chinese (Traditional)</a></li>
-                        <li><a href="${loginUrl}de">Deutsch</a></li>
-                        <li><a href="${loginUrl}ja">Japanese</a></li>
-                        <li><a href="${loginUrl}hr">Croatian</a></li>
-                        <li><a href="${loginUrl}uk">Ukranian</a></li>
-                        <li><a href="${loginUrl}cs">Czech</a></li>
-                        <li><a href="${loginUrl}sk">Slovak</a></li>
-                        <li><a href="${loginUrl}sl">Slovenian</a></li>
-                        <li><a href="${loginUrl}ca">Catalan</a></li>
-                        <li><a href="${loginUrl}mk">Macedonian</a></li>
-                        <li><a href="${loginUrl}fa">Farsi</a></li>
-                        <li><a href="${loginUrl}ar">Arabic</a></li>
-                        <li><a href="${loginUrl}pt_PT">Portuguese</a></li>
-                        <li><a href="${loginUrl}pt_BR">Portuguese (Brazil)</a></li>
-                        <li class="last"><a href="${loginUrl}pl">Polish</a></li>
-                    </ul>
-                </c:otherwise>
-            </c:choose>
+    <!--middle-->
+    <div class="login-middle">
+        <div class="poster"><img src="xst/poster.png" width="463" height="46" /></div>
+        <div class="login-log">
+            <form:form method="post" id="fm1" commandName="${commandName}" htmlEscape="true">
+                <p class="h74"></p>
+                <p class="input-com">
+                    <label class="pass-label" ></label>
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.openIdLocalId}">
+                            <strong>${sessionScope.openIdLocalId}</strong>
+                            <input type="hidden" id="username" name="username" value="${sessionScope.openIdLocalId}" />
+                        </c:when>
+                        <c:otherwise>
+                            <form:input cssClass="login-input" id="username" size="25" tabindex="1" path="username" autocomplete="off" htmlEscape="true" />
+                        </c:otherwise>
+                    </c:choose>
+                </p>
+                <p class="input-com password">
+                    <label class="password-label" ></label>
+                    <form:password cssClass="login-input" id="password" size="25" tabindex="2" path="password" htmlEscape="true" autocomplete="off" />
+                </p>
+                <p class="input-com-t verify">
+                    <label class="verify-label" ></label>
+                    <input class="login-input-t fl" type="text" id="captcha" name="captcha" />
+                    <span class="pass-verifyCode"><img src="captcha" width="93" height="33" /></span> </p>
+                <p class="remeber">
+                </p>
+                <b class="wro"><form:errors path="*" id="msg" element="span" htmlEscape="false" />&nbsp;</b>
+                <p class="log">
+                    <input type="submit" class="log-input" value="Log In"/>
+                <input type="hidden" name="execution" value="${flowExecutionKey}" />
+                <input type="hidden" name="_eventId" value="submit" />
+            </form:form>
         </div>
     </div>
+    <!--foot-->
+    <div class="foot">
+        <ul>
+            <li>&copy;2016 Gionee, Inc.</li>
+            <li>Develop By Gionee IT Department.</li>
+        </ul>
+    </div>
 </div>
+<script type="text/javascript" src="javascript/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#username').attr('placeholder', 'Username');
+        $('#password').attr('placeholder', 'Password');
+        $('#j_captcha_response').attr('placeholder', 'Captcha');
+        if (!$('#password').val()) {
+            $('#password').focus();
+        }
+        if (!$('#username').val()) {
+            $('#username').focus();
+        }
+    });
+</script>
+</body>
+</html>
+<%
+}
+else {
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="${base}"></base>
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- Bootstrap -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="xstwap/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="xstwap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="xstwap/style.css">
+    <style type="text/css">
+        .code {
+            font-family: Arial;
+            font-style: italic;
+            color: Red;
+            border: 0;
+            padding: 2px 3px;
+            letter-spacing: 3px;
+            font-weight: bolder;
+        }
 
-<jsp:directive.include file="includes/bottom.jsp" />
+        .unchanged {
+            border: 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            if (window.applicationCache) {
+
+            } else {
+                alert("你的浏览器不支持HTML5,请下载最新版本的浏览器");
+                location.href = "http://www.baidu.com";
+            }
+        }
+
+    </script>
+    <script>
+        //加载用户信息
+        $(function () {
+            var user = localStorage.getItem("userInfo");
+            if (user != null) {
+                var userInfo = JSON.parse(user);
+                $("#username").val(userInfo.username);
+                $("#password").val(userInfo.password);
+                console.info(userInfo.username);
+            }
+            //单击回车
+            document.onkeydown = function (e) {
+                var ev = document.all ? window.event : e;
+                if (ev.keyCode == 13) {
+                    subCheck();
+                }
+            }
+
+        });
+
+        function subCheck() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            if(username==''){
+                alert("请输入用户名");
+                return false;
+            }
+            if(password==''){
+                alert("请输入密码");
+                return false;
+            }
+            if(password.length<6){
+                alert("密码长度不能小于六位");
+                return false;
+            }
+
+
+            var user = new Object;
+            user.username = username;
+            user.password = password;
+            localStorage.setItem("userInfo", JSON.stringify(user));
+            /*   if (!validate()) {
+             return false;
+             } */
+            $("#loginform").submit();
+            //location.href = "/wapres/html5/middle.html";
+        }
+    </script>
+
+    <script language="javascript" type="text/javascript">
+        /*   console.info(Math.floor(Math.random() * 10));
+         var code; //在全局 定义验证码
+         function createCode() {
+         } */
+
+        /*     function validate() {
+         var inputCode = $("#input1").val();
+         if (inputCode.length <= 0) {
+         alert("请输入验证码！");
+         } else if (inputCode != code) {
+         createCode();
+         alert("验证码输入错误！");
+         //刷新验证码
+         return false;
+         } else {
+         //alert("^-^ OK");
+         return true;
+         }
+         } */
+    </script>
+
+</head>
+<div class="header">
+    <h1>登录</h1></div>
+<div class="wrap">
+    <div class="t_p"><p></p></div>
+    <div class="section">
+        <div class="login">
+            <form:form method="post" id="fm1" commandName="${commandName}" htmlEscape="true">
+                <ul class="blist">
+                    <li class="item">
+                        <div class="item_box"><span class="icons icon_log fl"></span> <span class="item_inp"><input
+                                placeholder="请输入用户名" name="username" id="username" class="t_i" value="" maxlength="12"
+                                required="" type="text"></span></div>
+                    </li>
+                    <li class="item">
+                        <div class="item_box"><span class="icons icon_pass"></span> <span class="item_inp"><input
+                                placeholder="请输入密码" name="password" id="password" class="t_i" value="" maxlength="15"
+                                required="" type="password"></span></div>
+                    </li>
+                    <li class="item">
+                        <div class="item_box">
+                            <span class="icons login_code"></span><span class="item_inp">
+                            <input  placeholder="请输入验证码" name="j_captcha_response" id="j_captcha_response" class="t_i" value="" maxlength="15"
+                                    required="" type="text">
+                            <div class="searchbtn"><img src="captcha" style="margin-left: -20px" width="70" height="40" />
+							</div>
+                        </div>
+                    </li>
+                    <li><b class="wro" style="color: red"><form:errors path="*" id="msg" element="span" htmlEscape="false" />&nbsp;</b></li>
+                    <li class="item"><input class="t_b btn_log" value="登录" type="submit" ></li>
+                    <input type="hidden" name="lt" value="${loginTicket}" />
+                    <input type="hidden" name="execution" value="${flowExecutionKey}" />
+                    <input type="hidden" name="_eventId" value="submit" />
+                </ul>
+            </form:form>
+        </div>
+    </div>
+    <div class="block">
+        <ul class="blist">
+            <div align="center">
+                <li class="item"> <a href="http://xst.gionee.com/client.html">android客户端下载</a></p></li>
+            </div>
+        </ul>
+        <ul class="blist">
+            <div align="center">  <p style="color:#86AECD;font-size: 11px;">©版权所有：深圳市金立通信设备有限公司 </p> <br>
+                <p style="color:#86AECD;font-size: 11px;">软件开发：金立集团信息中心开发部</p>
+            </div>
+        </ul>
+    </div>
+</div>
+</html>
+<%
+    }
+%>

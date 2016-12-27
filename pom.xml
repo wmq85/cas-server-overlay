@@ -164,6 +164,14 @@
             <version>4.2.8.RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+            <type>jar</type>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -186,7 +194,7 @@
                 <db.password>root</db.password>
 
                 <!--<server.name>http://192.168.189.24:8888</server.name>-->
-                <server.name>http://localhost:8888</server.name>
+                <server.name>http://192.168.13.200:8888</server.name>
             </properties>
         </profile>
 
