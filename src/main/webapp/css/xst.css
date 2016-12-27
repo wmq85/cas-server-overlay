@@ -122,16 +122,17 @@ ol, ul, li {
     padding-left: 27px;		
 }
 .login-input {
-    border: 1px solid #dedede;border-width: 0 1px 1px 0;
-    color: #666;
-    display: block;
-    font-size: 14px;
-    height: 30px;
-    line-height: 30px;
-    padding: 7px 10px 7px 50px;
-    position: relative;
-    width: 221px;
-    z-index: 17;
+	border: 1px solid #dedede;
+	border-width: 0 1px 1px 0;
+	color: #666;
+	display: block;
+	font-size: 14px;
+	height: 47px;
+	line-height: 30px;
+	padding: 7px 10px 7px 50px;
+	position: relative;
+	width: 280px;
+	z-index: 17;
 }
 .w121{
 	width:121px;
@@ -140,17 +141,19 @@ ol, ul, li {
 	width:62px;
 }
 .login-input-t {
-    border: 1px solid #dedede;border-width:1px;
-    color: #666;
-    display: block;
-    font-size: 14px;
-    height: 30px;
-    line-height: 30px;
-    padding: 7px 10px 7px 50px;
-    position: relative;
-    width: 62px;
-    z-index: 17;
+	border: 1px solid #dedede;
+	border-width: 1px;
+	color: #666;
+	display: block;
+	font-size: 14px;
+	height: 47px;
+	line-height: 30px;
+	padding: 7px 10px 7px 50px;
+	position: relative;
+	width: 170px;
+	z-index: 17;
 }
+
 .pass-verifyCode {
    border: 1px solid #ddd;
     float: left;
