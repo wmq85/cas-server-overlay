@@ -9,7 +9,7 @@
 %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Welcome to Gionee GSC System</title>
     <link rel="stylesheet" type="text/css" href="css/xst.css"/>
 </head>
@@ -17,42 +17,45 @@
 <div class="login-body">
     <!--header-->
     <div class="login-header">
-        <h1><img src="xst/logo.png" width="165" height="41" /></h1>
+        <h1><img src="xst/logo.png" width="165" height="41"/></h1>
     </div>
     <!--middle-->
     <div class="login-middle">
-        <div class="poster"><img src="xst/poster.png" width="463" height="46" /></div>
+        <div class="poster"><img src="xst/poster.png" width="463" height="46"/></div>
         <div class="login-log">
             <form:form method="post" id="fm1" commandName="${commandName}" htmlEscape="true">
-                <p class="h74"></p>
-                <p class="input-com">
-                    <label class="pass-label" ></label>
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.openIdLocalId}">
-                            <strong>${sessionScope.openIdLocalId}</strong>
-                            <input type="hidden" id="username" name="username" value="${sessionScope.openIdLocalId}" />
-                        </c:when>
-                        <c:otherwise>
-                            <form:input cssClass="login-input" id="username" size="25" tabindex="1" path="username" autocomplete="off" htmlEscape="true" />
-                        </c:otherwise>
-                    </c:choose>
-                </p>
-                <p class="input-com password">
-                    <label class="password-label" ></label>
-                    <form:password cssClass="login-input" id="password" size="25" tabindex="2" path="password" htmlEscape="true" autocomplete="off" />
-                </p>
-                <p class="input-com-t verify">
-                    <label class="verify-label" ></label>
-                    <input class="login-input-t fl" type="text" id="captcha" name="captcha" />
-                    <span class="pass-verifyCode"><img src="captcha" width="93" height="33" /></span> </p>
-                <p class="remeber">
-                </p>
-                <b class="wro"><form:errors path="*" id="msg" element="span" htmlEscape="false" />&nbsp;</b>
-                <p class="log">
-                    <input type="submit" class="log-input" value="Log In"/>
-                <input type="hidden" name="execution" value="${flowExecutionKey}" />
-                <input type="hidden" name="_eventId" value="submit" />
-            </form:form>
+            <p class="h74"></p>
+            <p class="input-com">
+                <label class="pass-label"></label>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.openIdLocalId}">
+                        <strong>${sessionScope.openIdLocalId}</strong>
+                        <input type="hidden" id="username" name="username" value="${sessionScope.openIdLocalId}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <form:input cssClass="login-input" id="username" size="25" tabindex="1" path="username"
+                                    autocomplete="off" htmlEscape="true"/>
+                    </c:otherwise>
+                </c:choose>
+            </p>
+            <p class="input-com password">
+                <label class="password-label"></label>
+                <form:password cssClass="login-input" id="password" size="25" tabindex="2" path="password"
+                               htmlEscape="true" autocomplete="off"/>
+            </p>
+            <p class="input-com-t verify">
+                <label class="verify-label"></label>
+                <input class="login-input-t fl" type="text" id="captcha" name="captcha"/>
+                <span class="pass-verifyCode"><img id="captchaImg" src="captcha" width="93" height="33"
+                                                   onclick="onCaptchaClick()"/></span></p>
+            <p class="remeber">
+            </p>
+            <b class="wro"><form:errors path="*" id="msg" element="span" htmlEscape="false"/>&nbsp;</b>
+            <p class="log">
+                <input type="submit" class="log-input" value="Log In"/>
+                <input type="hidden" name="execution" value="${flowExecutionKey}"/>
+                <input type="hidden" name="_eventId" value="submit"/>
+                </form:form>
         </div>
     </div>
     <!--foot-->
@@ -65,7 +68,7 @@
 </div>
 <script type="text/javascript" src="javascript/jquery-1.10.2.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $('#username').attr('placeholder', 'Username');
         $('#password').attr('placeholder', 'Password');
         $('#j_captcha_response').attr('placeholder', 'Captcha');
@@ -76,12 +79,16 @@
             $('#username').focus();
         }
     });
+
+    function onCaptchaClick() {
+        var now = new Date();
+        $('#captchaImg').attr('src', "captcha?" + now.getTime());
+    }
 </script>
 </body>
 </html>
 <%
-}
-else {
+} else {
 %>
 <!DOCTYPE html>
 <html>
@@ -151,15 +158,15 @@ else {
         function subCheck() {
             var username = $("#username").val();
             var password = $("#password").val();
-            if(username==''){
+            if (username == '') {
                 alert("请输入用户名");
                 return false;
             }
-            if(password==''){
+            if (password == '') {
                 alert("请输入密码");
                 return false;
             }
-            if(password.length<6){
+            if (password.length < 6) {
                 alert("密码长度不能小于六位");
                 return false;
             }
@@ -221,17 +228,20 @@ else {
                     <li class="item">
                         <div class="item_box">
                             <span class="icons login_code"></span><span class="item_inp">
-                            <input  placeholder="请输入验证码" name="j_captcha_response" id="j_captcha_response" class="t_i" value="" maxlength="15"
-                                    required="" type="text">
-                            <div class="searchbtn"><img src="captcha" style="margin-left: -20px" width="70" height="40" />
+                            <input placeholder="请输入验证码" name="j_captcha_response" id="j_captcha_response" class="t_i"
+                                   value="" maxlength="15"
+                                   required="" type="text">
+                            <div class="searchbtn"><img src="captcha" style="margin-left: -20px" width="70"
+                                                        height="40"/>
 							</div>
                         </div>
                     </li>
-                    <li><b class="wro" style="color: red"><form:errors path="*" id="msg" element="span" htmlEscape="false" />&nbsp;</b></li>
-                    <li class="item"><input class="t_b btn_log" value="登录" type="submit" ></li>
-                    <input type="hidden" name="lt" value="${loginTicket}" />
-                    <input type="hidden" name="execution" value="${flowExecutionKey}" />
-                    <input type="hidden" name="_eventId" value="submit" />
+                    <li><b class="wro" style="color: red"><form:errors path="*" id="msg" element="span"
+                                                                       htmlEscape="false"/>&nbsp;</b></li>
+                    <li class="item"><input class="t_b btn_log" value="登录" type="submit"></li>
+                    <input type="hidden" name="lt" value="${loginTicket}"/>
+                    <input type="hidden" name="execution" value="${flowExecutionKey}"/>
+                    <input type="hidden" name="_eventId" value="submit"/>
                 </ul>
             </form:form>
         </div>
@@ -239,11 +249,11 @@ else {
     <div class="block">
         <ul class="blist">
             <div align="center">
-                <li class="item"> <a href="http://xst.gionee.com/client.html">android客户端下载</a></p></li>
+                <li class="item"><a href="http://xst.gionee.com/client.html">android客户端下载</a></p></li>
             </div>
         </ul>
         <ul class="blist">
-            <div align="center">  <p style="color:#86AECD;font-size: 11px;">©版权所有：深圳市金立通信设备有限公司 </p> <br>
+            <div align="center"><p style="color:#86AECD;font-size: 11px;">©版权所有：深圳市金立通信设备有限公司 </p> <br>
                 <p style="color:#86AECD;font-size: 11px;">软件开发：金立集团信息中心开发部</p>
             </div>
         </ul>
