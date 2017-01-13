@@ -81,7 +81,7 @@
         <evaluate
                 expression="authenticationViaFormAction.validateCaptcha(flowRequestContext, flowScope.credential, messageContext)"/>
         <transition on="success" to="realSubmit"/>
-        <transition on="error" to="handleAuthenticationFailure"/>
+        <transition on="error" to="initializeLogin"/>
     </action-state>
 
     <action-state id="realSubmit">

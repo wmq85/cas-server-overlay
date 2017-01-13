@@ -21,7 +21,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <warName>cas</warName>
+                    <warName>cas-${maven.build.timestamp}</warName>
                     <overlays>
                         <overlay>
                             <groupId>org.jasig.cas</groupId>
@@ -32,6 +32,13 @@
                             </excludes>
                         </overlay>
                     </overlays>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/src/main/config/${environment}</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             <plugin>
@@ -179,6 +186,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     </properties>
 
     <profiles>
@@ -189,7 +197,9 @@
             </activation>
 
             <properties>
-                <db.url>jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8</db.url>
+                <environment>develop</environment>
+                <!--<db.url>jdbc:mysql://192.168.0.67:3307/uc?useSSL=true&amp;characterEncoding=utf8</db.url>-->
+                <db.url>jdbc:mysql://localhost:3306/iuc?useSSL=false&amp;characterEncoding=utf8</db.url>
                 <db.username>root</db.username>
                 <db.password>root</db.password>
 
@@ -202,11 +212,27 @@
             <id>test</id>
 
             <properties>
-                <db.url>jdbc:mysql://172.18.0.3:3306/uc?useSSL=true&amp;amp;characterEncoding=utf8</db.url>
+                <environment>test</environment>
+                <db.url>jdbc:mysql://172.18.0.3:3306/uc?useSSL=false&amp;amp;characterEncoding=utf8</db.url>
                 <db.username>root</db.username>
                 <db.password>root</db.password>
 
                 <server.name>http://icas.go.gionee.com</server.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>production</id>
+
+            <properties>
+                <environment>production</environment>
+                <db.url>
+                    jdbc:mysql://10.66.56.170:3306/uc?useSSL=false&amp;characterEncoding=utf8&amp;autoReconnect=true
+                </db.url>
+                <db.username>iuc</db.username>
+                <db.password>iuc_gionee2016!$</db.password>
+
+                <server.name>http://iauth.gionee.com</server.name>
             </properties>
         </profile>
     </profiles>

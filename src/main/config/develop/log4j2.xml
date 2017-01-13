@@ -5,8 +5,8 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %p [%c] - &lt;%m&gt;%n"/>
         </Console>
-        <RollingFile name="file" fileName="cas.log" append="true"
-                     filePattern="cas-%d{yyyy-MM-dd-HH}-%i.log">
+        <RollingFile name="file" fileName="d:/casLogs/cas.log" append="true"
+                     filePattern="d:/casLogs/cas-%d{yyyy-MM-dd-HH}-%i.log">
             <PatternLayout pattern="%d %p [%c] - %m%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
@@ -14,8 +14,8 @@
                 <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>
-        <RollingFile name="auditlogfile" fileName="cas_audit.log" append="true"
-                     filePattern="cas_audit-%d{yyyy-MM-dd-HH}-%i.log">
+        <RollingFile name="auditlogfile" fileName="d:/casLogs/cas_audit.log" append="true"
+                     filePattern="d:/casLogs/cas_audit-%d{yyyy-MM-dd-HH}-%i.log">
             <PatternLayout pattern="%d %p [%c] - %m%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
@@ -23,8 +23,8 @@
                 <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>
-        <RollingFile name="perfFileAppender" fileName="perfStats.log" append="true"
-                     filePattern="perfStats-%d{yyyy-MM-dd-HH}-%i.log">
+        <RollingFile name="perfFileAppender" fileName="d:/casLogs/perfStats.log" append="true"
+                     filePattern="d:/casLogs/perfStats-%d{yyyy-MM-dd-HH}-%i.log">
             <PatternLayout pattern="%m%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
@@ -34,7 +34,12 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <AsyncLogger  name="org.jasig" level="debug" additivity="false" includeLocation="true">
+        <AsyncLogger name="org.jasig.cas.web.view.CasReloadableMessageBundle" level="error" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+
+        <AsyncLogger  name="org.jasig" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="console"/>
             <AppenderRef ref="file"/>
         </AsyncLogger>
@@ -43,19 +48,20 @@
         <AsyncLogger name="org.springframework.web" level="warn" />
         <Logger name="org.pac4j" level="warn" />
 
-        <AsyncLogger name="perfStatsLogger" level="debug" additivity="false" includeLocation="true">
+        <AsyncLogger name="perfStatsLogger" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="perfFileAppender"/>
         </AsyncLogger>
 
-        <AsyncLogger name="org.jasig.cas.web.flow" level="debug" additivity="true" includeLocation="true">
+        <AsyncLogger name="org.jasig.cas.web.flow" level="info" additivity="true" includeLocation="true">
             <AppenderRef ref="file"/>
         </AsyncLogger>
-        <AsyncLogger name="org.jasig.inspektr.audit.support" level="debug" includeLocation="true">
+        <AsyncLogger name="org.jasig.inspektr.audit.support" level="info" includeLocation="true">
             <AppenderRef ref="auditlogfile"/>
             <AppenderRef ref="file"/>
         </AsyncLogger>
         <AsyncRoot level="debug">
             <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
         </AsyncRoot>
     </Loggers>
 </Configuration>
