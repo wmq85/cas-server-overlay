@@ -43,11 +43,11 @@
                 <form:password cssClass="login-input" id="password" size="25" tabindex="2" path="password"
                                htmlEscape="true" autocomplete="off"/>
             </p>
-            <p class="input-com-t verify">
-                <label class="verify-label"></label>
-                <input class="login-input-t fl" type="text" id="captcha" name="captcha"/>
-                <span class="pass-verifyCode"><img id="captchaImg" src="captcha" width="93" height="33"
-                                                   onclick="onCaptchaClick()"/></span></p>
+            <%--<p class="input-com-t verify">--%>
+                <%--<label class="verify-label"></label>--%>
+                <%--<input class="login-input-t fl" type="text" id="captcha" name="captcha"/>--%>
+                <%--<span class="pass-verifyCode"><img id="captchaImg" src="captcha" width="93" height="33"--%>
+                                                   <%--onclick="onCaptchaClick()"/></span></p>--%>
             <p class="remeber">
             </p>
             <b class="wro"><form:errors path="*" id="msg" element="span" htmlEscape="false"/>&nbsp;</b>
@@ -71,7 +71,7 @@
     $(function () {
         $('#username').attr('placeholder', 'Username');
         $('#password').attr('placeholder', 'Password');
-        $('#j_captcha_response').attr('placeholder', 'Captcha');
+//        $('#j_captcha_response').attr('placeholder', 'Captcha');
         if (!$('#password').val()) {
             $('#password').focus();
         }
@@ -225,17 +225,17 @@
                                 placeholder="请输入密码" name="password" id="password" class="t_i" value="" maxlength="15"
                                 required="" type="password"></span></div>
                     </li>
-                    <li class="item">
-                        <div class="item_box">
-                            <span class="icons login_code"></span><span class="item_inp">
-                            <input placeholder="请输入验证码" name="j_captcha_response" id="j_captcha_response" class="t_i"
-                                   value="" maxlength="15"
-                                   required="" type="text">
-                            <div class="searchbtn"><img src="captcha" style="margin-left: -20px" width="70"
-                                                        height="40"/>
-							</div>
-                        </div>
-                    </li>
+                    <%--<li class="item">--%>
+                        <%--<div class="item_box">--%>
+                            <%--<span class="icons login_code"></span><span class="item_inp">--%>
+                            <%--<input placeholder="请输入验证码" name="j_captcha_response" id="j_captcha_response" class="t_i"--%>
+                                   <%--value="" maxlength="15"--%>
+                                   <%--required="" type="text">--%>
+                            <%--<div class="searchbtn"><img src="captcha" style="margin-left: -20px" width="70"--%>
+                                                        <%--height="40"/>--%>
+							<%--</div>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
                     <li><b class="wro" style="color: red"><form:errors path="*" id="msg" element="span"
                                                                        htmlEscape="false"/>&nbsp;</b></li>
                     <li class="item"><input class="t_b btn_log" value="登录" type="submit"></li>

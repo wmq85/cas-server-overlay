@@ -62,7 +62,7 @@
         <binder>
             <binding property="username" required="true"/>
             <binding property="password" required="true"/>
-            <binding property="captcha" required="true"/>
+            <!--<binding property="captcha" required="true"/>-->
             <!--
             <binding property="rememberMe" />
             -->
@@ -74,7 +74,7 @@
             <evaluate expression="samlMetadataUIParserAction" />
             -->
         </on-entry>
-        <transition on="submit" bind="true" validate="true" to="validateCaptcha"/>
+        <transition on="submit" bind="true" validate="true" to="realSubmit"/>
     </view-state>
 
     <action-state id="validateCaptcha">
