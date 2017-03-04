@@ -213,7 +213,7 @@
 
             <properties>
                 <environment>test</environment>
-                <db.url>jdbc:mysql://172.18.0.3:3306/uc?useSSL=false&amp;amp;characterEncoding=utf8</db.url>
+                <db.url>jdbc:mysql://172.18.0.2:3306/uc?useSSL=false&amp;amp;characterEncoding=utf8</db.url>
                 <db.username>root</db.username>
                 <db.password>root</db.password>
 
